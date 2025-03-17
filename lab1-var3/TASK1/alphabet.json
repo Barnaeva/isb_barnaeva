@@ -1,0 +1,5 @@
+{
+  "alphabet": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя ,.:;-!",
+  "input_text": "plane_text.txt",
+  "output_text": "output.txt"
+}
