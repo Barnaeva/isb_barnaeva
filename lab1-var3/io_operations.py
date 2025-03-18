@@ -1,6 +1,5 @@
 import json
 
-
 def read_file(filename):
     """
     Reads the content of a text file.
