@@ -1,0 +1,17 @@
+{
+  "TASK1" : {
+    "plain_text" : "TASK1/text.txt",
+    "encrypted_text" : "TASK1/encrypted_text.txt",
+    "key" : "TASK1/key.json",
+    "alphabets" : "TASK1/alphabet.json"
+  },
+
+  "TASK2" : {
+    "plain_text" : "TASK2/cod3.txt",
+    "decrypted_text" : "TASK2/decrypted_text.txt",
+    "key" : "TASK2/key.json",
+    "frequency" : "TASK2/frequency.json",
+    "alp_freq" : "TASK2/alphabet_frequency.json"
+  }
+
+}

@@ -4,27 +4,31 @@ from io_operations import read_json, read_file, write_file, write_json
 
 
 def task1() -> None:
-    key = read_json("TASK1/key.json").get("key")
-    alphabet = read_json("TASK1/alphabet.json").get("alphabet")
-    text1 = read_file("TASK1/text.txt")
+    task1_files = read_json("settings.json")["TASK1"]
+
+    key = read_json(task1_files["key"])
+    alphabet = read_json(task1_files["alphabets"])["alphabet"]
+    text1 = read_file(task1_files["plain_text"])
 
     encrypted_text = text_encryption(text1, key, alphabet)
-    write_file("TASK1/encryption_text.txt", encrypted_text)
+    write_file(task1_files["encrypted_text"], encrypted_text)
 
 
 def task2() -> None:
-    text2 = read_file("TASK2/cod3.txt")
+    task2_files = read_json("settings.json")["TASK2"]
+
+    text2 = read_file(task2_files["plain_text"])
 
     freq = calculate_symbol_frequency(text2)
-    write_json("TASK2/frequency.json", freq)
+    write_json(task2_files["frequency"], freq)
 
-    freq_alp = read_json("TASK2/alphabet_frequency.json")
+    freq_alp = read_json(task2_files["alp_freq"])
     key = make_key(freq_alp, freq)
-    write_json("TASK2/key.json", key)
+    write_json(task2_files["key"], key)
 
-    key = read_json("TASK2/key.json")
+    key = read_json(task2_files["key"])
     decrypted_cod3_text = decryption_cod3(text2, key)
-    write_file("TASK2/decryption_text.txt", decrypted_cod3_text)
+    write_file(task2_files["decrypted_text"], decrypted_cod3_text)
 
 
 def main():
