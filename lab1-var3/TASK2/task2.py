@@ -5,20 +5,22 @@ def calculate_symbol_frequency(data: str) -> dict[str, float]:
     :param data: Input text.
     :return: Dictionary of symbols and their frequencies.
     """
-    if not data:
+    try:
+
+        result = {}
+
+        for symbol in data:
+            if symbol == "\n":
+                continue
+            result[symbol] = result.get(symbol, 0) + 1
+
+        for symbol, count in result.items():
+            result[symbol] = count / len(data)
+
+        return dict(sorted(result.items(), key=lambda item: item[1], reverse=True))
+    except Exception as e:
+        print(f"An error occurred while calculating symbol frequency: {e}")
         return {}
-
-    result = {}
-
-    for symbol in data:
-        if symbol == "\n":
-            continue
-        result[symbol] = result.get(symbol, None) + 1
-
-    for symbol, count in result.items():
-        result[symbol] = count / len(data)
-
-    return dict(sorted(result.items(), key=lambda item: item[1], reverse=True))
 
 
 def make_key(freq_alp: dict[str, float], freq_task: dict[str, float]) -> dict[str, str]:

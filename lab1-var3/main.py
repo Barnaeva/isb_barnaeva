@@ -6,7 +6,8 @@ from io_operations import read_json, read_file, write_file, write_json
 def task1() -> None:
     task1_files = read_json("settings.json")["TASK1"]
 
-    key = read_json(task1_files["key"])
+    key = read_json(task1_files["key"])["key"]
+
     alphabet = read_json(task1_files["alphabets"])["alphabet"]
     text1 = read_file(task1_files["plain_text"])
 

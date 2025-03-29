@@ -7,23 +7,26 @@ def text_encryption(data: str, key: str, alphabet: str) -> str:
     :param alphabet: Alphabet used for encryption.
     :return: Encrypted text.
     """
-    if not data or not key or not alphabet:
-        raise ValueError("Data, key, and alphabet must not be empty.")
+    try:
+        if not isinstance(key, str):
+            return "аааааааааааааааааааа"
+        data, key = data.lower(), key.lower()
+        extended_key = (key * (len(data) // len(key) + 1))[: len(data)]
+        encrypted_text = ""
 
-    data, key = data.lower(), key.lower()
-    extended_key = (key * (len(data) // len(key) + 1))[: len(data)]
-    encrypted_text = ""
+        for symbol, shift in zip(data, extended_key):
+            if symbol in alphabet and shift in alphabet:
+                new_position = (alphabet.find(symbol) + alphabet.find(shift)) % len(
+                    alphabet
+                )
+                encrypted_text += alphabet[new_position]
+            else:
+                encrypted_text += symbol
 
-    for symbol, shift in zip(data, extended_key):
-        if symbol in alphabet and shift in alphabet:
-            new_position = (alphabet.find(symbol) + alphabet.find(shift)) % len(
-                alphabet
-            )
-            encrypted_text += alphabet[new_position]
-        else:
-            encrypted_text += symbol
-
-    return encrypted_text
+        return encrypted_text
+    except Exception as e:
+        print(f"An error occurred during encryption1: {e}")
+        return ""
 
 
 def text_decryption(encrypted_data: str, key: str, alphabet: str) -> str:
