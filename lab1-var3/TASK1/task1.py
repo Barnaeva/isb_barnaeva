@@ -8,8 +8,6 @@ def text_encryption(data: str, key: str, alphabet: str) -> str:
     :return: Encrypted text.
     """
     try:
-        if not isinstance(key, str):
-            return "аааааааааааааааааааа"
         data, key = data.lower(), key.lower()
         extended_key = (key * (len(data) // len(key) + 1))[: len(data)]
         encrypted_text = ""
