@@ -9,12 +9,13 @@ def frequency_bitwise_test(sequence: str) -> float:
     :return: P-value
     """
     s_n = 0
-    n=len(sequence)
+    n = len(sequence)
     for val in sequence:
         s_n += 1 / math.sqrt(n) if val == "1" else -1 / math.sqrt(n)
 
     p_value = math.erfc(abs(s_n) / math.sqrt(2))
     return p_value
+
 
 def identical_consecutive_bits(sequence: str) -> float:
     """
@@ -28,10 +29,11 @@ def identical_consecutive_bits(sequence: str) -> float:
     if abs(s_n - 0.5) >= 2 / math.sqrt(n):
         return 0.0
 
-    v_n = sum(1 for i in range(n-1) if sequence[i] != sequence[i+1])
-    p_value=math.erfc((abs(v_n - 2*n*s_n*(1-s_n)))/(2*math.sqrt(2*n)*s_n*(1-s_n)))
+    v_n = sum(1 for i in range(n - 1) if sequence[i] != sequence[i + 1])
+    p_value = math.erfc((abs(v_n - 2 * n * s_n * (1 - s_n))) / (2 * math.sqrt(2 * n) * s_n * (1 - s_n)))
 
     return p_value
+
 
 import math
 

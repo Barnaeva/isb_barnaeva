@@ -1,5 +1,5 @@
 {
-  "seq_C" : "PRNG/Sequence_C.txt",
+  "seq_CPP" : "PRNG/Sequence_CPP.txt",
   "seq_JAVA" : "PRNG/Sequence_JAVA.txt",
   "test_results" : "TESTS/results.json"
 }

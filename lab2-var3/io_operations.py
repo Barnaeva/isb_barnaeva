@@ -22,22 +22,6 @@ def read_file(filename: str) -> str:
         return ""
 
 
-def write_file(filename: str, data: str) -> None:
-    """
-    Write data to a text file.
-
-    :param filename: The name of the file to write.
-    :param data: The data to write.
-    """
-    try:
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(data)
-    except PermissionError:
-        print(f"No permission to write to file {filename}.")
-    except Exception as exc:
-        print(f"Error writing to file: {exc}")
-
-
 def read_json(filename: str) -> dict:
     """
     Read a JSON file and return a dictionary.
