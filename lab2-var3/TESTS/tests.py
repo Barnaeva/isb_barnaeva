@@ -24,13 +24,15 @@ def identical_consecutive_bits(sequence: str) -> float:
     :return: P-value
     """
     n = len(sequence)
-    s_n = sum(1 for val in sequence if val == '1') / n
+    s_n = sum(1 for val in sequence if val == "1") / n
 
     if abs(s_n - 0.5) >= 2 / math.sqrt(n):
         return 0.0
 
     v_n = sum(1 for i in range(n - 1) if sequence[i] != sequence[i + 1])
-    p_value = math.erfc((abs(v_n - 2 * n * s_n * (1 - s_n))) / (2 * math.sqrt(2 * n) * s_n * (1 - s_n)))
+    p_value = math.erfc(
+        (abs(v_n - 2 * n * s_n * (1 - s_n))) / (2 * math.sqrt(2 * n) * s_n * (1 - s_n))
+    )
 
     return p_value
 
@@ -38,16 +40,18 @@ def identical_consecutive_bits(sequence: str) -> float:
 import math
 
 
-def longest_tes_sequence(sequence: str) -> float:
+def longest_tes_sequence(sequence: str, pi: list[float], block_size: int) -> float:
     """
     The function checks the longest sequence of elements in a block for a given sequence.
     :param sequence: Binary string
+    :param pi: Probabilities [p1, p2, p3, p4]
+    :param block_size: Block length
     :return: P-value
     """
+
     n = len(sequence)
     v = [0, 0, 0, 0]
-    blocks = [sequence[i:i + 8] for i in range(0, n, 8)]
-    pi = [0.2148, 0.3672, 0.2305, 0.1875]
+    blocks = [sequence[i : i + block_size] for i in range(0, n, block_size)]
 
     for block in blocks:
         max_block = 0
