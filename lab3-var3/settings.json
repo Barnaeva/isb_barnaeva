@@ -1,0 +1,8 @@
+{
+    "encrypted_key": "keys/encrypted_key.bin",
+    "public_key": "keys/public_key.pem",
+    "private_key": "keys/private_key.pem",
+    "input_dir": "documents/orig.txt",
+    "encrypted_dir": "documents/encrypt.txt",
+    "decrypted_dir": "documents/decrypt.txt"
+}

@@ -1,5 +1,8 @@
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.serialization import load_pem_private_key, load_pem_public_key
+from cryptography.hazmat.primitives.serialization import (
+    load_pem_private_key,
+    load_pem_public_key,
+)
 
 
 def serialize_private_key(private_key, filepath: str) -> None:
@@ -14,9 +17,9 @@ def serialize_private_key(private_key, filepath: str) -> None:
         pem = private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.TraditionalOpenSSL,
-            encryption_algorithm=serialization.NoEncryption()
+            encryption_algorithm=serialization.NoEncryption(),
         )
-        with open(filepath, 'wb') as f:
+        with open(filepath, "wb") as f:
             f.write(pem)
     except Exception as exc:
         raise Exception(f"Error serializing private key: {exc}")
@@ -33,9 +36,9 @@ def serialize_public_key(public_key, filepath: str) -> None:
     try:
         pem = public_key.public_bytes(
             encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo
+            format=serialization.PublicFormat.SubjectPublicKeyInfo,
         )
-        with open(filepath, 'wb') as f:
+        with open(filepath, "wb") as f:
             f.write(pem)
     except Exception as exc:
         raise Exception(f"Error serializing public key: {exc}")
@@ -50,7 +53,7 @@ def deserialize_private_key(filepath: str):
     :raises Exception: On failure to read or parse the key
     """
     try:
-        with open(filepath, 'rb') as f:
+        with open(filepath, "rb") as f:
             key_bytes = f.read()
         return load_pem_private_key(key_bytes, password=None)
     except Exception as exc:
@@ -66,7 +69,7 @@ def deserialize_public_key(filepath: str):
     :raises Exception: On failure to read or parse the key
     """
     try:
-        with open(filepath, 'rb') as f:
+        with open(filepath, "rb") as f:
             key_bytes = f.read()
         return load_pem_public_key(key_bytes)
     except Exception as exc:
@@ -82,7 +85,7 @@ def serialize_symmetric_key(key: bytes, filepath: str) -> None:
     :raises Exception: On failure to write the file
     """
     try:
-        with open(filepath, 'wb') as f:
+        with open(filepath, "wb") as f:
             f.write(key)
     except Exception as exc:
         raise Exception(f"Error serializing symmetric key: {exc}")
@@ -97,7 +100,7 @@ def deserialize_symmetric_key(filepath: str) -> bytes:
     :raises Exception: On failure to read the file
     """
     try:
-        with open(filepath, 'rb') as f:
+        with open(filepath, "rb") as f:
             return f.read()
     except Exception as exc:
         raise Exception(f"Error deserializing symmetric key: {exc}")

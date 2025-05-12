@@ -34,10 +34,7 @@ class SymmetricAlg:
         padded_data = padder.update(plaintext.encode()) + padder.finalize()
 
         # 2. Encrypt
-        cipher = Cipher(
-            algorithms.ChaCha20(self.__key, self.__nonce),
-            mode=None
-        )
+        cipher = Cipher(algorithms.ChaCha20(self.__key, self.__nonce), mode=None)
         encryptor = cipher.encryptor()
         ciphertext = encryptor.update(padded_data) + encryptor.finalize()
 
@@ -51,10 +48,7 @@ class SymmetricAlg:
         :param nonce: Nonce used for encryption
         :return: Decrypted string
         """
-        cipher = Cipher(
-            algorithms.ChaCha20(self.__key, nonce),
-            mode=None
-        )
+        cipher = Cipher(algorithms.ChaCha20(self.__key, nonce), mode=None)
         decryptor = cipher.decryptor()
         padded_data = decryptor.update(ciphertext) + decryptor.finalize()
 

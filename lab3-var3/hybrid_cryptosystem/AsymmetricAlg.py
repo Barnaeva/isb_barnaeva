@@ -20,10 +20,7 @@ class AsymmetricAlg:
 
         :return: private_key, public_key
         """
-        keys = rsa.generate_private_key(
-            public_exponent=65537,
-            key_size=2048
-        )
+        keys = rsa.generate_private_key(public_exponent=65537, key_size=2048)
         self.__private_key = keys
         self.__public_key = keys.public_key()
         return self.__private_key, self.__public_key
@@ -40,8 +37,8 @@ class AsymmetricAlg:
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
-                label=None
-            )
+                label=None,
+            ),
         )
         return encrypted_key
 
@@ -57,7 +54,7 @@ class AsymmetricAlg:
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
-                label=None
-            )
+                label=None,
+            ),
         )
         return decrypted_key

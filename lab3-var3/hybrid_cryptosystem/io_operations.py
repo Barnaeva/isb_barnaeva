@@ -87,7 +87,7 @@ def write_byte(filename: str, data: bytes) -> None:
         IOError: If file operation fails
     """
     try:
-        with open(filename, 'wb') as f:
+        with open(filename, "wb") as f:
             f.write(data)
     except Exception as e:
         raise IOError(f"File write error ({filename}): {e}")
@@ -107,7 +107,7 @@ def read_byte(filename: str) -> bytes:
         IOError: If file operation fails
     """
     try:
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             return f.read()
     except Exception as e:
         raise IOError(f"File read error ({filename}): {e}")
