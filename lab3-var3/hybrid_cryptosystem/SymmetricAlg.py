@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 
 
 class SymmetricAlg:
-    def __init__(self, key):
+    def __init__(self, key=None):
         """
         Initialize symmetric encryption handler
 
