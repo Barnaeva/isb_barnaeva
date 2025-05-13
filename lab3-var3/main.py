@@ -1,16 +1,16 @@
-from hybrid_cryptosystem.HybridSyst import generate_keys, encrypt_file, decrypt_file
+from hybrid_cryptosystem.HybridSyst import HybridSyst
 from hybrid_cryptosystem.io_operations import read_json
 
 
 def case_generate_keys(settings):
-    generate_keys(
+    HybridSyst.generate_keys(
         settings["encrypted_key"], settings["public_key"], settings["private_key"]
     )
     print("Keys generated")
 
 
 def case_encrypt(settings):
-    encrypt_file(
+    HybridSyst().encrypt_file(
         settings["input_dir"],
         settings["private_key"],
         settings["encrypted_key"],
@@ -20,7 +20,7 @@ def case_encrypt(settings):
 
 
 def case_decrypt(settings):
-    decrypt_file(
+    HybridSyst().decrypt_file(
         settings["encrypted_dir"],
         settings["private_key"],
         settings["encrypted_key"],
@@ -55,6 +55,7 @@ def show_menu():
 
 
 def main():
+
     settings = read_json("settings.json")
 
     while True:
