@@ -29,11 +29,9 @@ class SymmetricAlg:
         :param plaintext: Text to encrypt
         :return: Tuple of (nonce, ciphertext)
         """
-        # 1. Prepare data with padding
         padder = padding.ANSIX923(32).padder()
         padded_data = padder.update(plaintext.encode()) + padder.finalize()
 
-        # 2. Encrypt
         cipher = Cipher(algorithms.ChaCha20(self.__key, self.__nonce), mode=None)
         encryptor = cipher.encryptor()
         ciphertext = encryptor.update(padded_data) + encryptor.finalize()
