@@ -10,71 +10,90 @@ from .Serialization import (
 from .io_operations import read_byte, write_byte, write_file
 
 
-def generate_keys(
-    encrypted_key_path: str, public_key_path: str, private_key_path: str
-) -> None:
-    """
-    Generate and save hybrid encryption keys.
+class HybridSyst:
+    def __init__(self):
+        self.__nonce = SymmetricAlg.gen_nonce()
 
-    Args:
-        encrypted_key_path: encrypted symmetric key
-        public_key_path: public RSA key
-        private_key_path: private RSA key
-    """
-    symmetric_key = SymmetricAlg().generate_key()
+    @staticmethod
+    def generate_keys(
+        encrypted_key_path: str, public_key_path: str, private_key_path: str
+    ) -> None:
+        """
+        Generate and save hybrid encryption keys.
 
-    private_key, public_key = AsymmetricAlg().generate_keys()
+        Args:
+            encrypted_key_path: encrypted symmetric key
+            public_key_path: public RSA key
+            private_key_path: private RSA key
+        """
+        symmetric_key = SymmetricAlg.generate_key()
 
-    serialize_public_key(public_key, public_key_path)
-    serialize_private_key(private_key, private_key_path)
-    serialize_symmetric_key(
-        AsymmetricAlg(public_key=public_key).encrypt_key(symmetric_key),
-        encrypted_key_path,
-    )
+        private_key, public_key = AsymmetricAlg.generate_keys()
 
+        serialize_public_key(public_key, public_key_path)
+        serialize_private_key(private_key, private_key_path)
+        serialize_symmetric_key(
+            AsymmetricAlg.encrypt_key(symmetric_key, public_key),
+            encrypted_key_path,
+        )
 
-def encrypt_file(
-    input_file: str, private_key_path: str, encrypted_key_path: str, output_file: str
-) -> None:
-    """
-    Encrypt file using hybrid encryption system
+    def encrypt_file(
+        self,
+        input_file: str,
+        private_key_path: str,
+        encrypted_key_path: str,
+        output_file: str,
+    ) -> None:
+        """
+        Encrypt file using hybrid encryption system
 
-    Args:
-        input_file: Path to plaintext file
-        private_key_path: Path to private RSA key
-        encrypted_key_path: Path to encrypted symmetric key
-        output_file: Path for encrypted output
-    """
-    private_key = deserialize_private_key(private_key_path)
-    symmetric_key = AsymmetricAlg(private_key=private_key).decrypt_key(
-        deserialize_symmetric_key(encrypted_key_path)
-    )
+        Args:
+            input_file: Path to plaintext file
+            private_key_path: Path to private RSA key
+            encrypted_key_path: Path to encrypted symmetric key
+            output_file: Path for encrypted output
+        """
+        private_key = deserialize_private_key(private_key_path)
+        symmetric_key = AsymmetricAlg.decrypt_key(
+            deserialize_symmetric_key(encrypted_key_path), private_key
+        )
 
-    plaintext = read_byte(input_file)
-    nonce, ciphertext = SymmetricAlg(symmetric_key).encrypt(plaintext.decode("utf-8"))
+        plaintext = read_byte(input_file)
+        ciphertext = SymmetricAlg.encrypt(
+            plaintext.decode("utf-8"),
+            symmetric_key,
+            self.__nonce,
+        )
 
-    write_byte(output_file, nonce + ciphertext)
+        write_byte(output_file, self.__nonce + ciphertext)
 
+    @staticmethod
+    def decrypt_file(
+        input_file: str,
+        private_key_path: str,
+        encrypted_key_path: str,
+        output_file: str,
+    ) -> None:
+        """
+        Decrypt file using hybrid encryption system.
 
-def decrypt_file(
-    input_file: str, private_key_path: str, encrypted_key_path: str, output_file: str
-) -> None:
-    """
-    Decrypt file using hybrid encryption system.
+        Args:
+            input_file: Path to encrypted file
+            private_key_path: Path to private RSA key
+            encrypted_key_path: Path to encrypted symmetric key
+            output_file: Path for decrypted output
+        """
+        private_key = deserialize_private_key(private_key_path)
+        symmetric_key = AsymmetricAlg.decrypt_key(
+            deserialize_symmetric_key(encrypted_key_path), private_key
+        )
 
-    Args:
-        input_file: Path to encrypted file
-        private_key_path: Path to private RSA key
-        encrypted_key_path: Path to encrypted symmetric key
-        output_file: Path for decrypted output
-    """
-    private_key = deserialize_private_key(private_key_path)
-    symmetric_key = AsymmetricAlg(private_key=private_key).decrypt_key(
-        deserialize_symmetric_key(encrypted_key_path)
-    )
+        encrypted_data = read_byte(input_file)
+        nonce, ciphertext = encrypted_data[:16], encrypted_data[16:]
 
-    encrypted_data = read_byte(input_file)
-    nonce, ciphertext = encrypted_data[:16], encrypted_data[16:]
-
-    plaintext = SymmetricAlg(symmetric_key).decrypt(ciphertext, nonce)
-    write_file(output_file, plaintext)
+        plaintext = SymmetricAlg.decrypt(
+            ciphertext,
+            symmetric_key,
+            nonce,
+        )
+        write_file(output_file, plaintext)
