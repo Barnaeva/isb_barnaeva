@@ -1,0 +1,4 @@
+
+import hashlib
+hash = hashlib.sha1(f'bf67709b1216cb66038f3ae5ad2b4c066be03cbb'.encode()).hexdigest()
+print(hash)
