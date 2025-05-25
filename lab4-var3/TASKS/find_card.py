@@ -1,7 +1,6 @@
 import multiprocessing as mp
 import hashlib
 
-
 class FindCard:
 
     @staticmethod
@@ -23,8 +22,8 @@ class FindCard:
         return None
 
     @staticmethod
-    def find_card_parallel(bins: list[str], last_digits: str, target_hash: str) -> str:
-        cores = FindCard.number_of_cores()
+    def find_card_parallel(bins: list[str], last_digits: str, target_hash: str,cores:int) -> str:
+
         total_range = 10**6
         chunk_size = total_range // cores
 

@@ -1,4 +1,0 @@
-class MeasuringTime:
-
-    @staticmethod
-    def()
