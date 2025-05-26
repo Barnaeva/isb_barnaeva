@@ -1,7 +1,6 @@
 import multiprocessing as mp
 import hashlib
 from .io_operations import write_json
-from tqdm import tqdm
 
 
 class FindCard:
@@ -44,7 +43,9 @@ class FindCard:
         return None
 
     @staticmethod
-    def find_card_parallel(bins: list[str], last_digits: str, target_hash: str, cores: int) -> str:
+    def find_card_parallel(
+        bins: list[str], last_digits: str, target_hash: str, cores: int
+    ) -> str:
         """
         Searches for the appropriate card number using multiprocessing.
         :param bins: bins
@@ -77,7 +78,9 @@ class FindCard:
         return None
 
     @staticmethod
-    def serialization_res(bins: list[str], last_digits: str, target_hash: str, cores: int, filepath:str)->None:
+    def serialization_res(
+        bins: list[str], last_digits: str, target_hash: str, cores: int, filepath: str
+    ) -> None:
         """
         Serialize the number of the found card
         :param bins: bins
@@ -88,7 +91,7 @@ class FindCard:
         :return: None
         """
         try:
-            res =FindCard.find_card_parallel(bins,last_digits,target_hash,cores)
-            write_json(filepath,{"card_number": res})
+            res = FindCard.find_card_parallel(bins, last_digits, target_hash, cores)
+            write_json(filepath, {"card_number": res})
         except Exception as exc:
             raise Exception(f"Error serializing private key: {exc}")

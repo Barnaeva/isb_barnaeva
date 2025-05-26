@@ -6,7 +6,9 @@ import time
 class MeasuringTime:
 
     @staticmethod
-    def meas_time(bins: list[str], last_digits: str, target_hash: str) -> list[tuple[int, float]]:
+    def meas_time(
+        bins: list[str], last_digits: str, target_hash: str
+    ) -> list[tuple[int, float]]:
         """
         Measures the time to find a hash collision for a different number of processes
 
@@ -25,6 +27,7 @@ class MeasuringTime:
             time_end = time.time()
             all_time = time_end - time_start
             time_res.append((i, all_time))
+            print(f"Cores: {i}, Time: {all_time:.2f} sec")
 
         return time_res
 
